@@ -1,21 +1,12 @@
 import { Fragment } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
+import { useUserContext } from '../../contexts/UserContext'
 
-const user = {
-    name: 'Tom Cook',
-    email: 'tom@example.com',
-    imageUrl:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
     { name: 'Dashboard', href: '/' },
     { name: 'Surveys', href: '/surveys' },
-]
-
-const userNavigation = [
-    { name: 'Sign out', href: '#' },
 ]
 
 function classNames(...classes: string[]) {
@@ -23,6 +14,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function DefaultLayout() {
+    const { user: { user, token }, setUser } = useUserContext()
     function logout(evt: React.MouseEvent) {
         evt.stopPropagation()
         evt.preventDefault()
@@ -71,7 +63,7 @@ export default function DefaultLayout() {
                                                 <div>
                                                     <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                                         <span className="sr-only">Open user menu</span>
-                                                        <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                                                        <UserIcon className='w-9 h-9 bg-black/25 p-2 rounded-full text-white' />
                                                     </Menu.Button>
                                                 </div>
                                                 <Transition
@@ -131,11 +123,11 @@ export default function DefaultLayout() {
                                 <div className="border-t border-gray-700 pt-4 pb-3">
                                     <div className="flex items-center px-5">
                                         <div className="flex-shrink-0">
-                                            <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                                            <UserIcon className='w-9 h-9 bg-black/25 p-2 rounded-full text-white' />
                                         </div>
                                         <div className="ml-3">
-                                            <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                                            <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                                            <div className="text-base font-medium leading-none text-white">{user?.name}</div>
+                                            <div className="text-sm font-medium leading-none text-gray-400">{user?.email}</div>
                                         </div>
                                     </div>
                                     <div className="mt-3 space-y-1 px-2">
