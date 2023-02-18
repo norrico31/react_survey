@@ -1,7 +1,8 @@
 import './index.css'
 import { createRoot } from 'react-dom/client'
-import App from './App'
+import { RouterProvider } from 'react-router-dom'
+import { routes } from './routes'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-  <App />
+  <RouterProvider router={routes} />
 )
