@@ -1,7 +1,12 @@
-import React from 'react'
+import { HeaderContent, MainContent } from '../components/'
 
 export default function Surveys() {
     return (
-        <div>Surveys</div>
+        <>
+            <HeaderContent title='Surveys' />
+            <MainContent>
+                aha
+            </MainContent>
+        </>
     )
 }

@@ -1,7 +1,12 @@
-import React from 'react'
+import { HeaderContent, MainContent } from '../components/'
 
 export default function Dashboard() {
     return (
-        <div>Dashboard</div>
+        <>
+            <HeaderContent title='Dashboard' />
+            <MainContent>
+                aha
+            </MainContent>
+        </>
     )
 }
