@@ -5,7 +5,7 @@ import SurveyListItem from '../components/SurveyListItem'
 export default function Surveys() {
     const { surveys } = useSurveyContext()
 
-    function deleteSurvey(id: string) {
+    function deleteSurvey(id: number) {
 
     }
 

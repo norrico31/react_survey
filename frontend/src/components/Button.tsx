@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
-import { Link as ReactDoMLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 
-export default function Link({
+export default function Button({
     color = 'indigo',
     to,
     circle = false,
@@ -10,7 +10,7 @@ export default function Link({
     target = '_blank',
     onClick,
     children
-}: TLink) {
+}: TButton) {
     let classes = [
         "flex",
         "items-center",
@@ -66,18 +66,19 @@ export default function Link({
     }
     return <>
         {href && (
-            <ReactDoMLink to={href} className={classes.join(" ")} target={target}>
+            <Link to={href} className={classes.join(" ")} target={target}>
                 {children}
-            </ReactDoMLink>
+            </Link>
         )}
         {to && (
-            <ReactDoMLink to={to} className={classes.join(" ")}>
+            <Link to={to} className={classes.join(" ")}>
                 {children}
-            </ReactDoMLink>
+            </Link>
         )}
         {!to && !href && (
             <button onClick={(e) => {
                 e.stopPropagation()
+                e.preventDefault()
                 onClick?.()
             }} className={classes.join(" ")}>{children}</button>
         )}
@@ -85,7 +86,7 @@ export default function Link({
 }
 
 
-type TLink = {
+type TButton = {
     color?: string
     to?: string
     circle?: boolean
