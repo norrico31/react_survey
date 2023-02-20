@@ -1,20 +1,42 @@
-import { PhotoIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
-
-const surveyState = {
-    title: "",
-    slug: "",
-    status: false,
-    description: "",
-    image: null,
-    image_url: null,
-    expire_date: "",
-    questions: [],
-}
+import { ISurvey } from '../contexts/SurveyContext'
 
 export default function SurveyView() {
-    const [survey, setSurvey] = useState(surveyState)
+    const [survey, setSurvey] = useState<ISurvey>(() => ({
+        title: "",
+        slug: "",
+        status: false,
+        description: "",
+        image: '',
+        image_url: '',
+        expire_date: "",
+        created_at: '',
+        questions: [],
+        updated_at: '',
+        id: 0
+    }))
+
+    const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
+
+        if (ev.target?.files != null && ev.target?.files.length) {
+            const file = ev.target.files[0];
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                setSurvey({
+                    ...survey,
+                    image: file,
+                    image_url: reader?.result!,
+                });
+
+                ev.target.value = "";
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     function onSubmit(e: React.FormEvent) {
         e.preventDefault()
     }
@@ -32,7 +54,7 @@ export default function SurveyView() {
                             <div className="mt-1 flex items-center">
                                 {survey.image_url && (
                                     <img
-                                        src={survey.image_url}
+                                        src={survey.image_url + ''}
                                         alt=""
                                         className="w-32 h-32 object-cover"
                                     />
@@ -49,7 +71,7 @@ export default function SurveyView() {
                                     <input
                                         type="file"
                                         className="absolute left-0 top-0 right-0 bottom-0 opacity-0"
-                                    // onChange={onImageChoose}
+                                        onChange={onImageChoose}
                                     />
                                     Upload Image
                                 </button>

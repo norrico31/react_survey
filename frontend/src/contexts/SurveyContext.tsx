@@ -7,7 +7,8 @@ interface ISurveyContext {
 
 export interface ISurvey {
     id: number
-    image_url: string
+    image_url: string | ArrayBuffer
+    image?: string | File
     title: string
     slug: string
     status: boolean
