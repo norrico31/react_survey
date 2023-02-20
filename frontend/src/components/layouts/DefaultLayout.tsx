@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
-import { useUserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../contexts'
 
 const navigation = [
     { name: 'Dashboard', href: '/' },

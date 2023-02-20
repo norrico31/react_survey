@@ -2,10 +2,12 @@ import './index.css'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { routes } from './routes'
-import UserProvider from './contexts/UserContext'
+import { UserContext, SurveyContext } from './contexts'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-	<UserProvider>
-		<RouterProvider router={routes} />
-	</UserProvider>
+	<UserContext>
+		<SurveyContext>
+			<RouterProvider router={routes} />
+		</SurveyContext>
+	</UserContext>
 )
