@@ -1,12 +1,11 @@
-import { HeaderContent, MainContent } from '../components/'
+import { PageContent } from '../components/'
 
 export default function Dashboard() {
     return (
         <>
-            <HeaderContent title='Dashboard' />
-            <MainContent>
+            <PageContent title='Dashboard'>
                 Dashboard
-            </MainContent>
+            </PageContent>
         </>
     )
 }

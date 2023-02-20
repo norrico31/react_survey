@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { GuestLayout, DefaultLayout } from "./components";
-import { Dashboard, Login, Signup, Surveys } from './pages/'
+import { Dashboard, Login, Signup, Surveys, SurveyView } from './pages/'
 
 export const routes = createBrowserRouter([
     {
@@ -21,7 +21,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: 'surveys/create',
-                element: <Surveys />
+                element: <SurveyView />
             },
         ]
     },

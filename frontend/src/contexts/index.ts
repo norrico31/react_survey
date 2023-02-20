@@ -1,6 +1,2 @@
-export { default as SurveyContext } from './SurveyContext';
-export { useSurveyContext } from './SurveyContext';
-
-
-export { default as UserContext } from './UserContext';
-export { useUserContext } from './UserContext';
+export { default as SurveyContext, useSurveyContext } from './SurveyContext';
+export { default as UserContext, useUserContext } from './UserContext';
