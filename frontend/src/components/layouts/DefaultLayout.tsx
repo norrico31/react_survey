@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useUserContext } from '../../contexts/UserContext'
@@ -15,11 +15,17 @@ function classNames(...classes: string[]) {
 
 export default function DefaultLayout() {
     const { user: { user, token }, setUser } = useUserContext()
+
+    if (token == null) {
+        return <Navigate to='/login' />
+    }
+
     function logout(evt: React.MouseEvent) {
         evt.stopPropagation()
         evt.preventDefault()
         console.log('logout')
     }
+
     return (
         <>
             <div className="min-h-full">

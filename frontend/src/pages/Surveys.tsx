@@ -5,7 +5,7 @@ export default function Surveys() {
         <>
             <HeaderContent title='Surveys' />
             <MainContent>
-                aha
+                Surveys
             </MainContent>
         </>
     )

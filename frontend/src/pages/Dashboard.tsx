@@ -5,7 +5,7 @@ export default function Dashboard() {
         <>
             <HeaderContent title='Dashboard' />
             <MainContent>
-                aha
+                Dashboard
             </MainContent>
         </>
     )

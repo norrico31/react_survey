@@ -33,7 +33,7 @@ export const useUserContext = () => useContext(UserContext)
 export default function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<IUser>({
         user: initialState,
-        token: null
+        token: 'aha'
     })
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
 }
