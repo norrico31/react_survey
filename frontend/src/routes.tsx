@@ -31,7 +31,7 @@ export const routes = createBrowserRouter([
     },
     {
         path: '/',
-        element: <GuestLayout />, // use <Outlet /> to render the children
+        element: <GuestLayout />,
         children: [
             {
                 path: 'signup',
