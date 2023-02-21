@@ -29,7 +29,7 @@ export default function Button({
         classes = objClasses[color]
     } else {
         classes = [...classes, "text-white", "focus:ring-2", "focus:ring-offset-2"]
-        const objClasses: ObjKeyed = {
+        const objClasses: Record<string, string[]> = {
             'indigo': [
                 ...classes,
                 "bg-indigo-600",

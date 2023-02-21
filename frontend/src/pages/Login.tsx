@@ -1,4 +1,5 @@
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 export default function Login() {
     return (
@@ -6,6 +7,12 @@ export default function Login() {
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                 Sign in to your account
             </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+                Or{' '}
+                <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    Create an account
+                </Link>
+            </p>
             <form className="mt-8 space-y-6" action="#" method="POST">
                 <input type="hidden" name="remember" defaultValue="true" />
                 <div className="-space-y-px rounded-md shadow-sm">
