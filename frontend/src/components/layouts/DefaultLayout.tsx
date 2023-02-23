@@ -23,7 +23,10 @@ export default function DefaultLayout() {
     function logout(evt: React.MouseEvent) {
         evt.stopPropagation()
         evt.preventDefault()
-        console.log('logout')
+        // ADD API FOR LOGOUT HERE
+        localStorage.clear()
+        setUser({ token: null, user: undefined })
+        window.location.reload()
     }
 
     return (

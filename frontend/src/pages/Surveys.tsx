@@ -3,10 +3,6 @@ import { useSurveyContext } from '../contexts'
 import SurveyListItem from '../components/SurveyListItem'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 
-function SurveyCreate() {
-    return
-}
-
 export default function Surveys() {
     const { surveys } = useSurveyContext()
 

@@ -31,9 +31,13 @@ const UserContext = createContext<IUserContext>({
 export const useUserContext = () => useContext(UserContext)
 
 export default function UserProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<IUser>({
-        user: initialState,
-        token: null
+    const [user, setUser] = useState<IUser>(() => {
+        let userInfo = localStorage.getItem('user')
+        if (userInfo != null) return JSON.parse(userInfo)
+        return {
+            user: initialState,
+            token: null
+        }
     })
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
 }
