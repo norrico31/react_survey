@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import axiosClient from './../axios';
 
 export default function Signup() {
     const [fullName, setFullName] = useState("")
@@ -8,7 +9,24 @@ export default function Signup() {
     const [password, setPassword] = useState("")
     const [passwordConfirmation, setPasswordConfirmation] = useState("")
     const [error, setError] = useState({ __html: "" })
-    // 2:13:36
+
+    function onSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        setError({ __html: '' })
+        axiosClient.post('/signup', {
+            name: fullName,
+            email,
+            password,
+            password_confirmation: passwordConfirmation,
+        }).then(({ data }) => {
+            console.log(data)
+        }).catch(({ response }) => {
+            let errors = Object.values(response.data.errors).reduce((acc: any, err: any) => [...acc, ...err], [])
+            console.log(errors)
+            // console.log(errors)
+        })
+    }
+
     return (
         <>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -20,7 +38,8 @@ export default function Signup() {
                     Login with your account
                 </Link>
             </p>
-            <form className="mt-8 space-y-6" action="#" method="POST">
+            {/* {error} */}
+            <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={onSubmit}>
                 <input type="hidden" name="remember" defaultValue="true" />
                 <div className="-space-y-px rounded-md shadow-sm">
                     <div>
@@ -31,9 +50,11 @@ export default function Signup() {
                             id="full-name"
                             name="Name"
                             type="text"
-                            required
+                            // required
                             className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             placeholder="Full Name"
+                            value={fullName}
+                            onChange={(evt) => setFullName(evt.target.value)}
                         />
                     </div>
                     <div>
@@ -45,9 +66,11 @@ export default function Signup() {
                             name="email"
                             type="email"
                             autoComplete="email"
-                            required
+                            // required
                             className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             placeholder="Email address"
+                            value={email}
+                            onChange={(evt) => setEmail(evt.target.value)}
                         />
                     </div>
                     <div>
@@ -58,9 +81,11 @@ export default function Signup() {
                             id="password"
                             name="password"
                             type="password"
-                            required
+                            // required
                             className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             placeholder="Password"
+                            value={password}
+                            onChange={(evt) => setPassword(evt.target.value)}
                         />
                     </div>
                     <div>
@@ -71,9 +96,11 @@ export default function Signup() {
                             id="password-confirmation"
                             name="password_confirmation"
                             type="password"
-                            required
+                            // required
                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             placeholder="Password Confirmation"
+                            value={passwordConfirmation}
+                            onChange={(evt) => setPasswordConfirmation(evt.target.value)}
                         />
                     </div>
                 </div>
