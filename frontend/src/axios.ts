@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { IUser } from './contexts/UserContext'
 import { routes } from './routes'
 
 const axiosClient = axios.create({
@@ -6,8 +7,9 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use((config) => {
-    const token = '123'
-    config.headers.Authorization = 'Bearer ' + token
+    let user = localStorage.getItem('user') as any satisfies IUser
+    if (user != null) user = JSON.parse(user)
+    config.headers.Authorization = 'Bearer ' + user?.token
     return config
 })
 

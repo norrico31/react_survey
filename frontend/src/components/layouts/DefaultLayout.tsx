@@ -3,6 +3,7 @@ import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useUserContext } from '../../contexts'
+import axiosClient from './../../axios';
 
 const navigation = [
     { name: 'Dashboard', href: '/' },
@@ -23,10 +24,11 @@ export default function DefaultLayout() {
     function logout(evt: React.MouseEvent) {
         evt.stopPropagation()
         evt.preventDefault()
-        // ADD API FOR LOGOUT HERE
-        localStorage.clear()
-        setUser({ token: null, user: undefined })
-        window.location.reload()
+        axiosClient.post('/logout')
+            .then(() => {
+                localStorage.clear()
+                setUser({ token: null, user: undefined })
+            })
     }
 
     return (

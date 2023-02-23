@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($credentials, $remember)) {
             return response([
-                'error' => 'The Provided credentials are not correct'
+                'error' => 'The provided credentials are not correct'
             ], 422);
         }
         $user = Auth::user();

@@ -22,8 +22,7 @@ export default function Login() {
                 ...data
             })
         }).catch(({ response }) => {
-            const errors = Object.values(response.data.errors).reduce((acc: any, err: any) => [...acc, ...err], []) as string[]
-            setError({ __html: errors.join('<br>') })
+            setError({ __html: response.data.error })
         })
     }
 

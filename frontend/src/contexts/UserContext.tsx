@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-interface IUser {
+export interface IUser {
     token: string | null
     user?: {
         name: string;
