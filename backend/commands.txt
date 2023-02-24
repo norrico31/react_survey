@@ -1,0 +1,15 @@
+php artisan make:controller AuthController
+
+php artisan make:request LoginRequest
+php artisan make:request SignupRequest
+
+
+php artisan make:model Survey -mcrR
+php artisan make:controller SurveyController --api
+php artisan make:request SurveyStoreRequest
+php artisan make:request SurveyUpdateRequest
+php artisan make:resource SurveyResource
+
+php artisan make:model SurveyQuestion -m
+php artisan make:model SurveyAnswer -m
+php artisan make:model SurveyQuestion_Answer -m
