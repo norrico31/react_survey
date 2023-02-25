@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
 import { ISurvey } from '../contexts/SurveyContext'
@@ -19,6 +20,7 @@ const initSurveyState = {
 }
 
 export default function SurveyView() {
+    const navigate = useNavigate()
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +46,8 @@ export default function SurveyView() {
         };
         axiosClient.post('/survey', payload)
             .then((res) => {
-                console.log('res: ', res)
                 setSurvey({ ...initSurveyState })
+                navigate('/surveys')
             })
             .catch(err => console.log(err))
     }
