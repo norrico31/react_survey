@@ -9,6 +9,7 @@ export default function Button({
     link = false,
     target = '_blank',
     onClick,
+    type,
     children
 }: TButton) {
     let classes = [
@@ -76,11 +77,7 @@ export default function Button({
             </Link>
         )}
         {!to && !href && (
-            <button onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-                onClick?.()
-            }} className={classes.join(" ")}>{children}</button>
+            <button onClick={onClick} className={classes.join(" ")} type={type}>{children}</button>
         )}
     </>
 }
@@ -94,7 +91,8 @@ type TButton = {
     link?: boolean
     target?: string
     children: ReactNode
-    onClick?: () => void
+    onClick?: (e: React.MouseEvent | React.FormEvent) => void
+    type?: 'button' | 'reset' | 'submit'
 }
 
 type ObjKeyed = { [k: string]: string[] }

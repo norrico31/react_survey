@@ -2,21 +2,24 @@ import { useState } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
 import { ISurvey } from '../contexts/SurveyContext'
+import axiosClient from '../axios'
+
+const initSurveyState = {
+    title: "",
+    slug: "",
+    status: false,
+    description: "",
+    image: '',
+    image_url: '',
+    expire_date: "",
+    created_at: '',
+    questions: [],
+    updated_at: '',
+    id: 0
+}
 
 export default function SurveyView() {
-    const [survey, setSurvey] = useState<ISurvey>(() => ({
-        title: "",
-        slug: "",
-        status: false,
-        description: "",
-        image: '',
-        image_url: '',
-        expire_date: "",
-        created_at: '',
-        questions: [],
-        updated_at: '',
-        id: 0
-    }))
+    const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -38,8 +41,21 @@ export default function SurveyView() {
     };
 
     function onSubmit(e: React.FormEvent) {
-        e.preventDefault()
+        e.preventDefault();
+        // alert('aha')
+        axiosClient.post('/survey', {
+            // title: 'Lorem Ipsum', 
+            // description: 'ahahahaha', 
+            // 'expire_data': '12/12/23', 
+            // status: true, questions: []
+        })
+            .then((res) => {
+                console.log('res: ', res)
+                setSurvey({ ...initSurveyState })
+            })
+            .catch(err => console.log(err))
     }
+
     return (
         <PageContent title='Create Survey'>
             <form method='post' onSubmit={onSubmit}>
@@ -159,7 +175,7 @@ export default function SurveyView() {
                             </div>
                             <div className="ml-3 text-sm">
                                 <label
-                                    htmlFor="comments"
+                                    htmlFor="status"
                                     className="font-medium text-gray-700"
                                 >
                                     Active
@@ -180,7 +196,7 @@ export default function SurveyView() {
                         /> */}
                     </div>
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                        <Button>Save</Button>
+                        <Button type='submit'>Save</Button>
                     </div>
                 </div>
             </form>

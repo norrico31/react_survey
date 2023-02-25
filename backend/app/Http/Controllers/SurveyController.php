@@ -41,7 +41,6 @@ class SurveyController extends Controller
     public function store(SurveyStoreRequest $request)
     {
         $data = $request->validated();
-
         // Check if image was given and save on local file system
         if (isset($data['image'])) {
             $relativePath = $this->saveImage($data['image']);
