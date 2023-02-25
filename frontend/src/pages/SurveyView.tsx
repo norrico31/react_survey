@@ -9,8 +9,8 @@ const initSurveyState = {
     slug: "",
     status: false,
     description: "",
-    image: '',
-    image_url: '',
+    image: null,
+    image_url: null,
     expire_date: "",
     created_at: '',
     questions: [],
@@ -22,33 +22,27 @@ export default function SurveyView() {
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        const file = ev.target.files?.[0]!;
+        const reader = new FileReader();
+        reader.onload = (evt: ProgressEvent<FileReader>) => {
+            setSurvey({
+                ...survey,
+                image: evt?.target?.result!,
+                image_url: reader?.result!,
+            });
 
-        if (ev.target?.files != null && ev.target?.files.length) {
-            const file = ev.target.files[0];
-
-            const reader = new FileReader();
-            reader.onload = () => {
-                setSurvey({
-                    ...survey,
-                    image: file,
-                    image_url: reader?.result!,
-                });
-
-                ev.target.value = "";
-            };
-            reader.readAsDataURL(file);
-        }
+            ev.target.value = "";
+        };
+        reader.readAsDataURL(file);
     };
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
-        // alert('aha')
-        axiosClient.post('/survey', {
-            // title: 'Lorem Ipsum', 
-            // description: 'ahahahaha', 
-            // 'expire_data': '12/12/23', 
-            // status: true, questions: []
-        })
+        const { image_url, ...payload } = survey
+        if (payload['image']) {
+            payload['image'] = image_url!
+        };
+        axiosClient.post('/survey', payload)
             .then((res) => {
                 console.log('res: ', res)
                 setSurvey({ ...initSurveyState })
