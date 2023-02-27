@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useSurveyContext } from "../contexts";
+import { useSurveyContext, IQuestion } from "../contexts";
 
 type QuestionEditorProps = {
     index: number
-    question: string[]
-    addQuestion:
-    deleteQuestion:
-    questionChange:
+    question: IQuestion
+    addQuestion: (i?: number) => void
+    deleteQuestion: (q: IQuestion) => void
+    questionChange: (q: IQuestion) => void
 }
 
 export default function QuestionEditor({
@@ -25,12 +25,12 @@ export default function QuestionEditor({
         questionChange(model);
     }, [model])
 
-    function onTypeChange(ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    function onTypeChange(ev: any) {
         const newModel = {
             ...model,
             type: ev.target.value,
         }
-        if (!shouldHaveOptions(model.type) && shouldHaveOptions(ev.target.value, model.type)) {
+        if (!shouldHaveOptions(model.type) && shouldHaveOptions(ev.target.value)) {
             if (!model.data.options) {
                 newModel.data = {
                     options: [{ uuid: uuidv4(), text: "" }],
@@ -38,6 +38,11 @@ export default function QuestionEditor({
             }
         }
         setModel(newModel);
+    }
+
+    function shouldHaveOptions(type?: string) {
+        type = type || model.type;
+        return ["select", "radio", "checkbox"].includes(type);
     }
 
     function addOption() {
@@ -49,7 +54,7 @@ export default function QuestionEditor({
     }
 
     function deleteOption(op) {
-        model.data.options = model.data.options.filter(option => option.uuid != op.uuid)
+        model.data.options = model.data.options.filter((option) => option.uuid != op.uuid)
         setModel({ ...model })
     }
 
@@ -199,12 +204,6 @@ export default function QuestionEditor({
             <hr />
         </>
     );
-}
-
-// PENDING
-function shouldHaveOptions(type?: string, modelType?: string) {
-    type = (type || modelType) ?? '';
-    return ["select", "radio", "checkbox"].includes(type);
 }
 
 function upperCaseFirst(str: string) {

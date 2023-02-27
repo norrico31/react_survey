@@ -6,14 +6,13 @@ interface ISurveyContext {
     setSurveys: React.Dispatch<React.SetStateAction<any>>
     questionTypes: typeof initialQuestionTypesState
 }
-
-interface Questions {
+export interface IQuestion {
     id: string
-    survey_id: string
+    survey_id?: string
     type: string
     question: string
     description?: string
-    data?: string
+    data?: any
 }
 
 export interface ISurvey {
@@ -27,7 +26,7 @@ export interface ISurvey {
     created_at: string
     updated_at?: string
     expire_date?: string
-    questions?: Questions[]
+    questions?: IQuestion[]
 }
 
 const SurveyContext = createContext<ISurveyContext>({
