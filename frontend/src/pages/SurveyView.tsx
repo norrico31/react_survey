@@ -4,6 +4,7 @@ import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
 import { ISurvey } from '../contexts/SurveyContext'
 import axiosClient from '../axios'
+import SurveyQuestions from '../components/SurveyQuestions'
 
 const initSurveyState = {
     title: "",
@@ -23,6 +24,7 @@ export default function SurveyView() {
     const navigate = useNavigate()
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
     const [error, setError] = useState<string | null>(null)
+    const [errors, setErrors] = useState<string | null>(null)
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const file = ev.target.files?.[0]!;
@@ -38,10 +40,15 @@ export default function SurveyView() {
         };
         reader.readAsDataURL(file);
     };
-    // 3: 57: 49
+
+    function surveyUpdate(survey: ISurvey) {
+
+    }
+
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         setError(null)
+        setErrors(null)
         const { image_url, ...payload } = survey
         if (payload['image']) {
             payload['image'] = image_url!
@@ -51,7 +58,16 @@ export default function SurveyView() {
                 setSurvey({ ...initSurveyState })
                 navigate('/surveys')
             })
-            .catch(err => setError(err.response.data.message))
+            .catch(err => {
+                console.log(err.response.data)
+                if (err && err.response.data.message) {
+                    setError(err.response.data.message)
+                } else if (err && err.response.data.errors) {
+                    setErrors(err.response.data.errors)
+                } else throw Error('Errorrrrr')
+
+                return err
+            })
     }
 
     return (
@@ -115,6 +131,7 @@ export default function SurveyView() {
                                 placeholder="Survey Title"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
+                            <small className="text-red">small</small>
                         </div>
                         {/*Title*/}
 
@@ -192,10 +209,10 @@ export default function SurveyView() {
                         {/* <button type="button" onClick={addQuestion}>
                             Add question
                         </button> */}
-                        {/* <SurveyQuestions
-                            questions={survey.questions}
-                            onQuestionsUpdate={onQuestionsUpdate}
-                        /> */}
+                        <SurveyQuestions
+                            questions={survey?.questions ?? []}
+                            onQuestionsUpdate={() => null}
+                        />
                     </div>
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                         <Button type='submit'>Save</Button>

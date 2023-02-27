@@ -1,14 +1,25 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
+const initialQuestionTypesState = ['text', "select", "radio", "checkbox", "textarea"]
 interface ISurveyContext {
     surveys: ISurvey[];
     setSurveys: React.Dispatch<React.SetStateAction<any>>
+    questionTypes: typeof initialQuestionTypesState
+}
+
+interface Questions {
+    id: string
+    survey_id: string
+    type: string
+    question: string
+    description?: string
+    data?: string
 }
 
 export interface ISurvey {
     id: number
     image_url?: string | ArrayBuffer | null
-    image: string | ArrayBuffer | null
+    image?: string | ArrayBuffer | null
     title: string
     slug: string
     status: boolean
@@ -16,11 +27,12 @@ export interface ISurvey {
     created_at: string
     updated_at?: string
     expire_date?: string
-    questions?: any[]
+    questions?: Questions[]
 }
 
 const SurveyContext = createContext<ISurveyContext>({
     surveys: [],
+    questionTypes: initialQuestionTypesState,
     setSurveys: () => null,
 })
 
@@ -28,7 +40,8 @@ export const useSurveyContext = () => useContext(SurveyContext)
 
 export default function SurveyProvider({ children }: { children: ReactNode }) {
     const [surveys, setSurveys] = useState<ISurvey[]>([...tmpSurveys])
-    return <SurveyContext.Provider value={{ surveys, setSurveys } as const}>{children}</SurveyContext.Provider>
+    const [questionTypes] = useState<typeof initialQuestionTypesState>(initialQuestionTypesState)
+    return <SurveyContext.Provider value={{ surveys, setSurveys, questionTypes } as const}>{children}</SurveyContext.Provider>
 }
 
 const tmpSurveys = [
