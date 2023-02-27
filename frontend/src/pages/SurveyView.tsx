@@ -22,6 +22,7 @@ const initSurveyState = {
 export default function SurveyView() {
     const navigate = useNavigate()
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
+    const [error, setError] = useState<string | null>(null)
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const file = ev.target.files?.[0]!;
@@ -37,9 +38,10 @@ export default function SurveyView() {
         };
         reader.readAsDataURL(file);
     };
-
+    // 3: 57: 49
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setError(null)
         const { image_url, ...payload } = survey
         if (payload['image']) {
             payload['image'] = image_url!
@@ -49,7 +51,7 @@ export default function SurveyView() {
                 setSurvey({ ...initSurveyState })
                 navigate('/surveys')
             })
-            .catch(err => console.log(err))
+            .catch(err => setError(err.response.data.message))
     }
 
     return (
@@ -57,7 +59,11 @@ export default function SurveyView() {
             <form method='post' onSubmit={onSubmit}>
                 <div className="shadow sm:overflow-hidden sm:rounded-md">
                     <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-
+                        {error != null && (
+                            <div className="bg-red-500 text-white py-3 px-3">
+                                {error}
+                            </div>
+                        )}
                         {/* Image */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700">
