@@ -12,9 +12,9 @@ type SurveyQuestionProps = {
 export default function SurveyQuestions({ questions, onQuestionsUpdate }: SurveyQuestionProps) {
     const [myQuestions, setMyQuestions] = useState<IQuestion[]>([...questions]);
 
-    useEffect(() => {
-        setMyQuestions(questions)
-    }, [questions])
+    // useEffect(() => {
+    //     setMyQuestions(questions)
+    // }, [questions])
 
     function addQuestion(index?: number) {
         index = index !== undefined ? index : myQuestions.length

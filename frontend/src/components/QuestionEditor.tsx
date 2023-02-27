@@ -10,7 +10,7 @@ type QuestionEditorProps = {
     deleteQuestion: (q: IQuestion) => void
     questionChange: (q: IQuestion) => void
 }
-
+// 4: 32: 11
 export default function QuestionEditor({
     index = 0,
     question,
@@ -21,9 +21,9 @@ export default function QuestionEditor({
     const [model, setModel] = useState({ ...question });
     const { questionTypes } = useSurveyContext();
 
-    useEffect(() => {
-        questionChange(model);
-    }, [model])
+    // useEffect(() => {
+    //     questionChange(model);
+    // }, [model])
 
     function onTypeChange(ev: any) {
         const newModel = {
@@ -166,16 +166,11 @@ export default function QuestionEditor({
                                 </button>
                             </h4>
 
-                            {model.data.options.length === 0 && (
-                                <div className="text-xs text-gray-600 text-center py-3">
-                                    You don't have any options defined
-                                </div>
-                            )}
-                            {model.data.options.length > 0 && (
-                                <div>
-                                    {model.data.options.map((op, ind: number) => (
+                            <div>
+                                {model.data.options.length > 0 ? (
+                                    model.data.options.map((op, idx: number) => (
                                         <div key={op.uuid} className="flex items-center mb-1">
-                                            <span className="w-6 text-sm">{ind + 1}.</span>
+                                            <span className="w-6 text-sm">{idx + 1}.</span>
                                             <input
                                                 type="text"
                                                 value={op.text}
@@ -193,9 +188,14 @@ export default function QuestionEditor({
                                                 <TrashIcon className="w-3 h-3 text-red-500" />
                                             </button>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
+                                    ))
+
+                                ) : (
+                                    <div className="text-xs text-gray-600 text-center py-3">
+                                        You don't have any options defined
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
