@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from "uuid"
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
 import { IQuestion, ISurvey } from '../contexts/SurveyContext'
@@ -37,9 +38,20 @@ export default function SurveyView() {
             });
 
             ev.target.value = "";
-        };
+        }
         reader.readAsDataURL(file);
-    };
+    }
+
+    function addQuestion() {
+        survey.questions.push({
+            id: uuidv4(),
+            type: "text",
+            question: "",
+            description: "",
+            data: {},
+        })
+        setSurvey({ ...survey })
+    }
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -201,9 +213,9 @@ export default function SurveyView() {
                         </div>
                         {/*Active*/}
 
-                        {/* <button type="button" onClick={addQuestion}>
+                        <button type="button" onClick={addQuestion}>
                             Add question
-                        </button> */}
+                        </button>
                         <SurveyQuestions
                             questions={survey?.questions ?? []}
                             onQuestionsUpdate={(questions: IQuestion[]) => setSurvey({ ...survey, questions })}

@@ -26,7 +26,7 @@ export interface ISurvey {
     created_at: string
     updated_at?: string
     expire_date?: string
-    questions?: IQuestion[]
+    questions: IQuestion[]
 }
 
 const SurveyContext = createContext<ISurveyContext>({

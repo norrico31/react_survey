@@ -12,9 +12,9 @@ type SurveyQuestionProps = {
 export default function SurveyQuestions({ questions, onQuestionsUpdate }: SurveyQuestionProps) {
     const [myQuestions, setMyQuestions] = useState<IQuestion[]>([...questions]);
 
-    // useEffect(() => {
-    //     setMyQuestions(questions)
-    // }, [questions])
+    useEffect(() => {
+        setMyQuestions(questions)
+    }, [questions])
 
     function addQuestion(index?: number) {
         index = index !== undefined ? index : myQuestions.length
@@ -26,7 +26,7 @@ export default function SurveyQuestions({ questions, onQuestionsUpdate }: Survey
             data: {},
         })
         setMyQuestions([...myQuestions]);
-        onQuestionsUpdate(myQuestions)
+        // onQuestionsUpdate([...myQuestions])
     }
 
     const questionChange = (question: IQuestion) => {
@@ -38,14 +38,13 @@ export default function SurveyQuestions({ questions, onQuestionsUpdate }: Survey
             return q;
         });
         setMyQuestions(newQuestions);
-        onQuestionsUpdate(newQuestions)
+        // onQuestionsUpdate(newQuestions)
     }
 
     const deleteQuestion = (question: IQuestion) => {
         const newQuestions = myQuestions.filter((q) => q.id !== question.id);
-
         setMyQuestions(newQuestions);
-        onQuestionsUpdate(newQuestions)
+        // onQuestionsUpdate(newQuestions)
     }
     return (
         <>
@@ -60,6 +59,7 @@ export default function SurveyQuestions({ questions, onQuestionsUpdate }: Survey
                     Add question
                 </button>
             </div>
+            {JSON.stringify(myQuestions, undefined, 2)}
             {myQuestions.length ? (
                 myQuestions.map((q: IQuestion, ind) => (
                     <QuestionEditor
