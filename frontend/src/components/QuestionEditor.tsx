@@ -26,7 +26,7 @@ export default function QuestionEditor({
             ...model,
             type: ev.target.value,
         }
-        if (!shouldHaveOptions(model.type) && shouldHaveOptions(ev.target.value)) {
+        if (!shouldHaveOptions(model.type, model.type) && shouldHaveOptions(ev.target.value, model.type)) {
             if (!model.data.options) {
                 newModel.data = {
                     options: [{ uuid: uuidv4(), text: "" }],
@@ -36,23 +36,16 @@ export default function QuestionEditor({
         setModel(newModel);
     }
 
-    function shouldHaveOptions(type?: string) {
-        type = type || model.type;
-        return ["select", "radio", "checkbox"].includes(type);
-    }
-
     function addOption() {
         model.data.options.push({
             uuid: uuidv4(),
             text: "",
         });
         questionChange({ ...model })
-        // setModel({ ...model })
     }
 
     function deleteOption(op) {
         model.data.options = model.data.options.filter((option) => option.uuid != op.uuid)
-        // setModel({ ...model })
         questionChange({ ...model })
     }
 
@@ -153,7 +146,7 @@ export default function QuestionEditor({
                 {/*Description*/}
 
                 <div>
-                    {shouldHaveOptions() && (
+                    {shouldHaveOptions(model.type, model.type) && (
                         <div>
                             <h4 className="text-sm font-semibold mb-1 flex justify-between items-center ">
                                 Options
@@ -208,4 +201,9 @@ export default function QuestionEditor({
 
 function upperCaseFirst(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function shouldHaveOptions(type: string, modelType: string) {
+    type = type || modelType;
+    return ["select", "radio", "checkbox"].includes(type);
 }
