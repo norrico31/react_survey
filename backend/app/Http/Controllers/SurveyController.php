@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\QuestionTypeEnum;
+use App\Http\Enums\QuestionTypeEnum;
 use App\Models\Survey;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
-import { ISurvey } from '../contexts/SurveyContext'
+import { IQuestion, ISurvey } from '../contexts/SurveyContext'
 import axiosClient from '../axios'
 import SurveyQuestions from '../components/SurveyQuestions'
 
@@ -131,7 +131,6 @@ export default function SurveyView() {
                                 placeholder="Survey Title"
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
-                            <small className="text-red">small</small>
                         </div>
                         {/*Title*/}
 
@@ -211,7 +210,7 @@ export default function SurveyView() {
                         </button> */}
                         <SurveyQuestions
                             questions={survey?.questions ?? []}
-                            onQuestionsUpdate={() => null}
+                            onQuestionsUpdate={(questions: IQuestion[]) => setSurvey({ ...survey, questions })}
                         />
                     </div>
                     <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">

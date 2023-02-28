@@ -10,7 +10,7 @@ type QuestionEditorProps = {
     deleteQuestion: (q: IQuestion) => void
     questionChange: (q: IQuestion) => void
 }
-// 4: 32: 11
+
 export default function QuestionEditor({
     index = 0,
     question,
@@ -21,9 +21,9 @@ export default function QuestionEditor({
     const [model, setModel] = useState({ ...question });
     const { questionTypes } = useSurveyContext();
 
-    // useEffect(() => {
-    //     questionChange(model);
-    // }, [model])
+    useEffect(() => {
+        questionChange(model);
+    }, [model])
 
     function onTypeChange(ev: any) {
         const newModel = {
