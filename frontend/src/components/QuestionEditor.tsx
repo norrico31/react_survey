@@ -18,12 +18,8 @@ export default function QuestionEditor({
     deleteQuestion,
     questionChange,
 }: QuestionEditorProps) {
-    const [model, setModel] = useState({ ...question });
-    const { questionTypes } = useSurveyContext();
-
-    useEffect(() => {
-        questionChange(model);
-    }, [model])
+    const [model, setModel] = useState({ ...question })
+    const { questionTypes } = useSurveyContext()
 
     function onTypeChange(ev: any) {
         const newModel = {
@@ -50,12 +46,14 @@ export default function QuestionEditor({
             uuid: uuidv4(),
             text: "",
         });
-        setModel({ ...model })
+        questionChange({ ...model })
+        // setModel({ ...model })
     }
 
     function deleteOption(op) {
         model.data.options = model.data.options.filter((option) => option.uuid != op.uuid)
-        setModel({ ...model })
+        // setModel({ ...model })
+        questionChange({ ...model })
     }
 
     return (
@@ -99,9 +97,10 @@ export default function QuestionEditor({
                             name="question"
                             id="question"
                             value={model.question}
-                            onChange={(ev) =>
+                            onChange={(ev) => {
                                 setModel({ ...model, question: ev.target.value })
-                            }
+                                questionChange(model)
+                            }}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
@@ -144,9 +143,10 @@ export default function QuestionEditor({
                         name="questionDescription"
                         id="questionDescription"
                         value={model.description || ""}
-                        onChange={(ev) =>
+                        onChange={(ev) => {
                             setModel({ ...model, description: ev.target.value })
-                        }
+                            questionChange(model)
+                        }}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     ></textarea>
                 </div>
@@ -181,7 +181,7 @@ export default function QuestionEditor({
                                                 className="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500"
                                             />
                                             <button
-                                                onClick={ev => deleteOption(op)}
+                                                onClick={() => deleteOption(op)}
                                                 type="button"
                                                 className="h-6 w-6 rounded-full flex items-center justify-center border border-transparent transition-colors hover:border-red-100"
                                             >

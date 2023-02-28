@@ -41,10 +41,6 @@ export default function SurveyView() {
         reader.readAsDataURL(file);
     };
 
-    function surveyUpdate(survey: ISurvey) {
-
-    }
-
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         setError(null)
