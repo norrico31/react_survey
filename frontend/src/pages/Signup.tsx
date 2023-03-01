@@ -21,12 +21,10 @@ export default function Signup() {
             password,
             password_confirmation: passwordConfirmation,
         }).then(({ data }) => {
-            localStorage.setItem('user', JSON.stringify(data))
-            setUser({
-                ...data
-            })
+            localStorage.setItem('token', JSON.stringify(data.token))
+            setUser({ user: data.user, token: data.token })
         }).catch(({ response }) => {
-            const errors = Object.values(response.data.errors).reduce((acc: any, err: any) => [...acc, ...err], []) as string[]
+            const errors = Object.values(response?.data?.errors)?.reduce((acc: any, err: any) => [...acc, ...err], []) as string[]
             setError({ __html: errors.join('<br>') })
         })
     }

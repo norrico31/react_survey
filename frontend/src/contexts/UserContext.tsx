@@ -6,6 +6,10 @@ export interface IUser {
         name: string;
         email: string;
         imageUrl: string
+        created_at: string
+        email_verified_at?: string
+        id: number
+        updated_at: string
     }
 }
 
@@ -18,6 +22,10 @@ const initialState = {
     name: 'Unknown',
     email: 'Unknown',
     imageUrl: '',
+    created_at: '',
+    email_verified_at: '',
+    id: 0,
+    updated_at: ''
 }
 
 const UserContext = createContext<IUserContext>({
@@ -32,8 +40,11 @@ export const useUserContext = () => useContext(UserContext)
 
 export default function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<IUser>(() => {
-        let userInfo = localStorage.getItem('user')
-        if (userInfo != null) return JSON.parse(userInfo)
+        let token = localStorage.getItem('token')
+        if (token != null) {
+            token = JSON.parse(token)
+            return { token, user: initialState }
+        }
         return {
             user: initialState,
             token: null

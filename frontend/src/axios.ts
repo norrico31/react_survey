@@ -7,9 +7,9 @@ const axiosClient = axios.create({
 })
 
 axiosClient.interceptors.request.use((config) => {
-    let user = localStorage.getItem('user') as any satisfies IUser
-    if (user != null) user = JSON.parse(user)
-    config.headers.Authorization = 'Bearer ' + user?.token
+    let token = localStorage.getItem('token') as any satisfies IUser
+    if (token != null) token = JSON.parse(token)
+    config.headers.Authorization = 'Bearer ' + token
     return config
 })
 

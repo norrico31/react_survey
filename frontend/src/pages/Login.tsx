@@ -17,12 +17,10 @@ export default function Login() {
             email,
             password,
         }).then(({ data }) => {
-            localStorage.setItem('user', JSON.stringify(data))
-            setUser({
-                ...data
-            })
+            localStorage.setItem('token', JSON.stringify(data.token))
+            setUser({ user: data.user, token: data.token })
         }).catch(({ response }) => {
-            setError({ __html: response.data.error })
+            setError({ __html: response?.data?.error })
         })
     }
 
