@@ -1,10 +1,20 @@
+import { useState, useEffect } from 'react'
 import { Button, PageContent } from '../components/'
-import { useSurveyContext } from '../contexts'
+import { useSurveyContext, ISurvey } from '../contexts'
 import SurveyListItem from '../components/SurveyListItem'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import axiosClient from '../axios'
 
 export default function Surveys() {
-    const { surveys } = useSurveyContext()
+    // const { surveys } = useSurveyContext()
+    const [surveys, setSurveys] = useState<Array<ISurvey>>([])
+
+    useEffect(function fetchSurveys() {
+        axiosClient.get('/surveys')
+            .then(({ data: { data } }) => {
+                setSurveys(data)
+            })
+    }, [])
 
     function deleteSurvey(id: number) {
         console.log('delete survey: ', id)
