@@ -9,10 +9,12 @@ php artisan make:controller SurveyController --api
 php artisan make:request SurveyStoreRequest
 php artisan make:request SurveyUpdateRequest
 php artisan make:resource SurveyResource
+php artisan make:resource SurveyQuestionResource
 
 php artisan make:model SurveyQuestion -m
 php artisan make:model SurveyAnswer -m
 php artisan make:model SurveyQuestion_Answer -m
+
 
 php artisan migrate:rollback
 php artisan migrate
