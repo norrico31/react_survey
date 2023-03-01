@@ -11,8 +11,6 @@
 //     console.log(v)
 // }
 
-// 4:48:21
-
 
 const arr = [
     {
@@ -63,3 +61,22 @@ for (let i = 0; i < arr.length; i++) {
 // console.log([...names.values()].map(person => person.name))
 // console.log(Array.from(names).map(([k, val]) => val.name))
 // console.log(Array.from(names.entries()).map(([k, v]) => v))
+
+function countPositivesSumNegatives(input) {
+    if (!input.length || input.every((inp) => inp == 0)) return []
+    let positive = 0
+    let negative = 0
+    for (let i = 0; i < input.length; i++) {
+        let inp = input[i]
+        if (inp >= 0) {
+            positive++
+        } else {
+            negative += inp
+        }
+    }
+    return [positive, negative]
+  }
+
+console.log(countPositivesSumNegatives([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15]))
+console.log(countPositivesSumNegatives([0, 2, 3, 0, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14]))
+console.log(countPositivesSumNegatives([0, 0]))
