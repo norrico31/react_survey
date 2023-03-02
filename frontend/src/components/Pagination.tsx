@@ -1,16 +1,29 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 
-const items = [
-    { id: 1, title: 'Back End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
-    { id: 2, title: 'Front End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
-    { id: 3, title: 'User Interface Designer', department: 'Design', type: 'Full-time', location: 'Remote' },
-]
-
 type PaginationProps = {
-    meta: { from: number; to: number; total: number }
+    meta: {
+        current_page: number;
+        from: number;
+        last_page: number;
+        links: never[];
+        path: string;
+        per_page: number;
+        to: number;
+        total: number;
+    }
+    getSurveys: (page: number) => void
 }
 
-export default function Pagination({ meta = { from: 0, to: 0, total: 0 } }: PaginationProps) {
+export default function Pagination({ meta, getSurveys }: PaginationProps) {
+    function handlePage(number: number) {
+        return function (evt: React.MouseEvent<HTMLAnchorElement>) {
+            evt.stopPropagation()
+            evt.preventDefault()
+            if (number < 1 || meta.last_page < number) return
+            getSurveys(number)
+        }
+    }
+
     return (
         <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 mt-4 sm:px-6 shadow-lg">
             <div className="flex flex-1 justify-between sm:hidden">
@@ -38,54 +51,15 @@ export default function Pagination({ meta = { from: 0, to: 0, total: 0 } }: Pagi
                     <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                         <a
                             href="#"
+                            onClick={handlePage(meta.current_page - 1)}
                             className="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
                         >
                             <span className="sr-only">Previous</span>
                             <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                         </a>
-                        {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
                         <a
                             href="#"
-                            aria-current="page"
-                            className="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
-                        >
-                            1
-                        </a>
-                        <a
-                            href="#"
-                            className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                        >
-                            2
-                        </a>
-                        <a
-                            href="#"
-                            className="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex"
-                        >
-                            3
-                        </a>
-                        <span className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700">
-                            ...
-                        </span>
-                        <a
-                            href="#"
-                            className="relative hidden items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 md:inline-flex"
-                        >
-                            8
-                        </a>
-                        <a
-                            href="#"
-                            className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                        >
-                            9
-                        </a>
-                        <a
-                            href="#"
-                            className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                        >
-                            10
-                        </a>
-                        <a
-                            href="#"
+                            onClick={handlePage(meta.current_page + 1)}
                             className="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
                         >
                             <span className="sr-only">Next</span>

@@ -20,14 +20,22 @@ export default function Surveys() {
     })
 
     useEffect(function fetchSurveys() {
+        let cleanUp = false;
+        !cleanUp && getSurveys(1)
+        return function () {
+            cleanUp = true
+        }
+    }, [])
+
+    function getSurveys(pageNumber: number) {
         setLoading(true)
-        axiosClient.get('/surveys')
+        axiosClient.get('/surveys' + '?page=' + pageNumber)
             .then(({ data }) => {
                 setSurveys(data.data)
                 setMeta(data.meta)
                 setLoading(false)
             })
-    }, [])
+    }
 
     function deleteSurvey(id: number) {
         console.log('delete survey: ', id)
@@ -51,7 +59,7 @@ export default function Surveys() {
                         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
                             {surveys.map((survey: any) => <SurveyListItem survey={survey} key={survey.id} onClick={deleteSurvey} />)}
                         </div>
-                        <Pagination meta={meta} />
+                        <Pagination meta={meta} getSurveys={getSurveys} />
                     </div>
                 )}
             </PageContent>
