@@ -11,8 +11,9 @@
 //     console.log(v)
 // }
 
+// 5:39:34
 
-const arr = [
+const arr = [ 
     {
         id: '1',
         name: 'gerald',
@@ -62,21 +63,21 @@ for (let i = 0; i < arr.length; i++) {
 // console.log(Array.from(names).map(([k, val]) => val.name))
 // console.log(Array.from(names.entries()).map(([k, v]) => v))
 
-function countPositivesSumNegatives(input) {
-    if (!input.length || input.every((inp) => inp == 0)) return []
-    let positive = 0
-    let negative = 0
-    for (let i = 0; i < input.length; i++) {
-        let inp = input[i]
-        if (inp >= 0) {
-            positive++
-        } else {
-            negative += inp
-        }
-    }
-    return [positive, negative]
-  }
 
-console.log(countPositivesSumNegatives([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14, -15]))
-console.log(countPositivesSumNegatives([0, 2, 3, 0, 5, 6, 7, 8, 9, 10, -11, -12, -13, -14]))
-console.log(countPositivesSumNegatives([0, 0]))
+
+
+
+
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+function incrementString (strng) {
+    // const body = strng.slice(0, -1)
+    // const lastDigit = strng.slice(-1).match(/[0-9]/);
+    // return lastDigit === null ? strng + "1" : lastDigit != 9 ? body + (+lastDigit + 1) : incrementString(body)
+    return strng.replace(/([0-8]|\d?9+)?$/, (e) => (e ? +e + 1 : 1));
+}
+
+// console.log(incrementString('foo'))
+// console.log(incrementString('foo9'))
+console.log(incrementString('foo000200'))
+// console.log(incrementString('foobar023'))
