@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid"
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { Button, PageContent } from '../components'
@@ -23,9 +23,19 @@ const initSurveyState = {
 
 export default function SurveyView() {
     const navigate = useNavigate()
+    const { id } = useParams()
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
     const [error, setError] = useState<string | null>(null)
     const [errors, setErrors] = useState<string | null>(null)
+
+    useEffect(() => {
+        if (id != undefined) {
+            axiosClient.get('/surveys/' + id)
+                .then(({ data }) => {
+                    setSurvey(data.data)
+                })
+        }
+    }, [])
 
     const onImageChoose = (ev: React.ChangeEvent<HTMLInputElement>) => {
         const file = ev.target.files?.[0]!;
