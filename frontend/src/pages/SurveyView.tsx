@@ -12,8 +12,8 @@ const initSurveyState = {
     slug: "",
     status: false,
     description: "",
-    image: null,
-    image_url: null,
+    image: '',
+    image_url: '',
     expire_date: "",
     created_at: '',
     questions: [],
@@ -71,8 +71,11 @@ export default function SurveyView() {
         setError(null)
         setErrors(null)
         const { image_url, ...payload } = survey
+
         if (payload['image']) payload['image'] = image_url!
+
         const result = id != undefined ? axiosClient.put('/surveys/' + id, payload) : axiosClient.post('/surveys', payload)
+
         result.then(() => {
             setSurvey({ ...initSurveyState })
             navigate('/surveys')

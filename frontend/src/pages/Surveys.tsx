@@ -29,7 +29,7 @@ export default function Surveys() {
 
     function getSurveys(pageNumber: number) {
         setLoading(true)
-        axiosClient.get('/surveys' + '?page=' + pageNumber)
+        axiosClient.get(pageNumber > 1 ? `/surveys?page=${pageNumber}` : '/surveys')
             .then(({ data }) => {
                 setSurveys(data.data)
                 setMeta(data.meta)
