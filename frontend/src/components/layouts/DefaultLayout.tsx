@@ -3,7 +3,9 @@ import { Navigate, NavLink, Outlet } from 'react-router-dom'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserIcon } from '@heroicons/react/24/outline'
 import { useUserContext } from '../../contexts'
-import axiosClient from './../../axios';
+import axiosClient from './../../axios'
+import Toast from '../Toast'
+import { useToastContext } from '../../contexts/ToastContext'
 
 const navigation = [
     { name: 'Dashboard', href: '/' },
@@ -161,6 +163,7 @@ export default function DefaultLayout() {
                     )}
                 </Disclosure>
                 <Outlet />
+                <Toast />
             </div>
         </>
     )
