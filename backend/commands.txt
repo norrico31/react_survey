@@ -15,6 +15,9 @@ php artisan make:model SurveyQuestion -m
 php artisan make:model SurveyAnswer -m
 php artisan make:model SurveyQuestion_Answer -m
 
+-a, --all Generate a migration, factory, and resource controller for the model
+php artisan make:model Todo -a
+
 
 php artisan migrate:rollback
 php artisan migrate
