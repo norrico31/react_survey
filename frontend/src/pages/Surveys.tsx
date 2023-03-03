@@ -4,8 +4,10 @@ import { ISurvey } from '../contexts'
 import SurveyListItem from '../components/SurveyListItem'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import axiosClient from '../axios'
+import { useToastContext } from '../contexts/ToastContext'
 
 export default function Surveys() {
+    const { showToast } = useToastContext()
     const [surveys, setSurveys] = useState<Array<ISurvey>>([])
     const [loading, setLoading] = useState(false)
     const [meta, setMeta] = useState({
@@ -38,12 +40,13 @@ export default function Surveys() {
     }
 
     function deleteSurvey(id: number) {
-        axiosClient.delete('/surveys/' + id)
-            .then(() => {
-                if (window.confirm(`Are you sure you want to delete this survey?`)) {
+        if (window.confirm(`Are you sure you want to delete this survey?`)) {
+            axiosClient.delete('/surveys/' + id)
+                .then(() => {
+                    showToast('Delete survey successfully!')
                     getSurveys(meta.current_page)
-                }
-            })
+                })
+        }
     }
 
     return (
@@ -61,10 +64,14 @@ export default function Surveys() {
                     <div>Loading...</div>
                 ) : (
                     <div>
-                        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-                            {surveys.map((survey: any) => <SurveyListItem survey={survey} key={survey.id} onClick={deleteSurvey} />)}
-                        </div>
-                        <Pagination meta={meta} getSurveys={getSurveys} />
+                        {!surveys.length ? (
+                            <div className="py-8 text-center text-gray-700">You don't have surveys created</div>
+                        ) : (
+                            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+                                {surveys.map((survey: any) => <SurveyListItem survey={survey} key={survey.id} onClick={deleteSurvey} />)}
+                            </div>
+                        )}
+                        {surveys.length > 0 && <Pagination meta={meta} getSurveys={getSurveys} />}
                     </div>
                 )}
             </PageContent>

@@ -2,15 +2,14 @@ import './index.css'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { routes } from './routes'
-import { UserContext, SurveyContext } from './contexts'
-import ToastProvider from './contexts/ToastContext'
+import { UserProvider, SurveyProvider, ToastProvider } from './contexts'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
-	<UserContext>
-		<SurveyContext>
+	<UserProvider>
+		<SurveyProvider>
 			<ToastProvider>
 				<RouterProvider router={routes} />
 			</ToastProvider>
-		</SurveyContext>
-	</UserContext>
+		</SurveyProvider>
+	</UserProvider>
 )

@@ -21,6 +21,10 @@ export default function QuestionEditor({
     const [model, setModel] = useState({ ...question })
     const { questionTypes } = useSurveyContext()
 
+    useEffect(() => {
+        questionChange(model);
+    }, [model])
+
     function onTypeChange(ev: any) {
         const newModel = {
             ...model,
@@ -41,12 +45,12 @@ export default function QuestionEditor({
             uuid: uuidv4(),
             text: "",
         });
-        questionChange({ ...model })
+        setModel({ ...model })
     }
 
-    function deleteOption(op) {
-        model.data.options = model.data.options.filter((option) => option.uuid != op.uuid)
-        questionChange({ ...model })
+    function deleteOption(op: any) {
+        model.data.options = model.data.options.filter((option: any) => option.uuid != op.uuid)
+        setModel({ ...model })
     }
 
     return (
@@ -92,7 +96,6 @@ export default function QuestionEditor({
                             value={model.question}
                             onChange={(ev) => {
                                 setModel({ ...model, question: ev.target.value })
-                                questionChange(model)
                             }}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -138,7 +141,6 @@ export default function QuestionEditor({
                         value={model.description || ""}
                         onChange={(ev) => {
                             setModel({ ...model, description: ev.target.value })
-                            questionChange(model)
                         }}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     ></textarea>
@@ -161,7 +163,7 @@ export default function QuestionEditor({
 
                             <div>
                                 {model.data.options.length > 0 ? (
-                                    model.data.options.map((op, idx: number) => (
+                                    model.data.options.map((op: any, idx: number) => (
                                         <div key={op.uuid} className="flex items-center mb-1">
                                             <span className="w-6 text-sm">{idx + 1}.</span>
                                             <input

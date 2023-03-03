@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid"
 import { PhotoIcon } from '@heroicons/react/24/outline'
+import { IQuestion, ISurvey, useToastContext } from '../contexts'
 import { Button, PageContent } from '../components'
-import { IQuestion, ISurvey } from '../contexts/SurveyContext'
 import axiosClient from '../axios'
 import SurveyQuestions from '../components/SurveyQuestions'
 
@@ -24,6 +24,7 @@ const initSurveyState = {
 export default function SurveyView() {
     const navigate = useNavigate()
     const { id } = useParams()
+    const { showToast } = useToastContext()
     const [survey, setSurvey] = useState<ISurvey>(() => initSurveyState)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -77,6 +78,7 @@ export default function SurveyView() {
         const result = id != undefined ? axiosClient.put('/surveys/' + id, payload) : axiosClient.post('/surveys', payload)
 
         result.then(() => {
+            showToast(id ? 'Update survey successfully!' : 'Create survey successfully!')
             setSurvey({ ...initSurveyState })
             navigate('/surveys')
         }).catch(err => {
@@ -96,7 +98,7 @@ export default function SurveyView() {
             {loading ? (
                 <div>Loading...</div>
             ) : (
-                <form method='post' onSubmit={onSubmit}>
+                <form method='post' onSubmit={onSubmit} autoComplete='off'>
                     <div className="shadow sm:overflow-hidden sm:rounded-md">
                         <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                             {error != null && (
@@ -148,6 +150,7 @@ export default function SurveyView() {
                                     type="text"
                                     name="title"
                                     id="title"
+                                    autoComplete='off'
                                     value={survey.title}
                                     onChange={(ev) =>
                                         setSurvey({ ...survey, title: ev.target.value })
@@ -170,6 +173,7 @@ export default function SurveyView() {
                                 <textarea
                                     name="description"
                                     id="description"
+                                    autoComplete='off'
                                     value={survey.description || ""}
                                     onChange={(ev) =>
                                         setSurvey({ ...survey, description: ev.target.value })
