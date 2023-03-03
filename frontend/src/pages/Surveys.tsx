@@ -38,7 +38,12 @@ export default function Surveys() {
     }
 
     function deleteSurvey(id: number) {
-        console.log('delete survey: ', id)
+        axiosClient.delete('/surveys/' + id)
+            .then(() => {
+                if (window.confirm(`Are you sure you want to delete this survey?`)) {
+                    getSurveys(meta.current_page)
+                }
+            })
     }
 
     return (

@@ -17,7 +17,7 @@ export interface IQuestion {
 
 export interface ISurvey {
     id: number
-    image_url?: string | ArrayBuffer | null
+    image_url?: string | ArrayBuffer
     image?: string | ArrayBuffer | null
     title: string
     slug: string
