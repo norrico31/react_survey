@@ -71,21 +71,26 @@ export default function SurveyView() {
         if (payload['image']) {
             payload['image'] = image_url!
         };
-        axiosClient.post('/survey', payload)
-            .then((res) => {
-                setSurvey({ ...initSurveyState })
-                navigate('/surveys')
-            })
-            .catch(err => {
-                console.log(err.response.data)
-                if (err && err.response.data.message) {
-                    setError(err.response.data.message)
-                } else if (err && err.response.data.errors) {
-                    setErrors(err.response.data.errors)
-                } else throw Error('Errorrrrr')
+        let result = null
+        if (id) {
+            result = axiosClient.put('/surveys/' + id, payload)
+        } else {
+            result = axiosClient.post('/survey', payload)
+        }
 
-                return err
-            })
+        result.then(() => {
+            setSurvey({ ...initSurveyState })
+            navigate('/surveys')
+        }).catch(err => {
+            console.log(err.response.data)
+            if (err && err.response.data.message) {
+                setError(err.response.data.message)
+            } else if (err && err.response.data.errors) {
+                setErrors(err.response.data.errors)
+            } else throw Error('Errorrrrr')
+            return err
+        })
+
     }
 
     return (

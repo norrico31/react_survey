@@ -17,7 +17,7 @@ class SurveyUpdateRequest extends FormRequest
         if ($this->user()->id !== $survey->user_id) {
             return false;
         }
-        return false;
+        return true;
     }
 
     /**
