@@ -5,7 +5,23 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        'fade-in-down': {
+          "from": {
+            transform: "translateY(-5.75rem)",
+            opacity: '0'
+          },
+          "to": {
+            transform: "translateY(0rem)",
+            opacity: '1'
+          },
+        },
+      },
+      animation: {
+        'fade-in-down': "fade-in-down 0.2s ease-in-out both",
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
