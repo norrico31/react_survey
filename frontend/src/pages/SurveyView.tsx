@@ -69,6 +69,7 @@ export default function SurveyView() {
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
+        if (initSurveyState === survey) return
         setError(null)
         setErrors(null)
         const { image_url, ...payload } = survey
@@ -79,7 +80,6 @@ export default function SurveyView() {
 
         result.then(() => {
             showToast(id ? 'Update survey successfully!' : 'Create survey successfully!')
-            setSurvey({ ...initSurveyState })
             navigate('/surveys')
         }).catch(err => {
             console.log(err.response.data)

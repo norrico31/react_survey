@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { GuestLayout, DefaultLayout } from "./components";
-import { Dashboard, Login, Signup, Surveys, SurveyView } from './pages/'
+import { Dashboard, Login, Signup, Surveys, SurveyView, _Dashboard } from './pages/'
 
 export const routes = createBrowserRouter([
     {
@@ -13,7 +13,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: '/',
-                element: <Dashboard />
+                element: <_Dashboard />
             },
             {
                 path: 'surveys',
