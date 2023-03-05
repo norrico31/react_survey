@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { useSurveyContext, IQuestion } from "../contexts";
+import { useSurveyContext, IQuestion, QuestionOptions } from "../contexts";
 
 type QuestionEditorProps = {
     index: number
@@ -25,13 +25,13 @@ export default function QuestionEditor({
         questionChange(model);
     }, [model])
 
-    function onTypeChange(ev: any) {
+    function onTypeChange(ev: React.ChangeEvent<HTMLSelectElement>) {
         const newModel = {
             ...model,
             type: ev.target.value,
         }
         if (!shouldHaveOptions(model.type, model.type) && shouldHaveOptions(ev.target.value, model.type)) {
-            if (!model.data.options) {
+            if (!model.data?.options) {
                 newModel.data = {
                     options: [{ uuid: uuidv4(), text: "" }],
                 }
@@ -41,7 +41,7 @@ export default function QuestionEditor({
     }
 
     function addOption() {
-        model.data.options.push({
+        model.data.options?.push({
             uuid: uuidv4(),
             text: "",
         });
@@ -49,7 +49,7 @@ export default function QuestionEditor({
     }
 
     function deleteOption(op: any) {
-        model.data.options = model.data.options.filter((option: any) => option.uuid != op.uuid)
+        model.data.options = model.data.options?.filter((option: any) => option.uuid != op.uuid)
         setModel({ ...model })
     }
 
@@ -94,9 +94,7 @@ export default function QuestionEditor({
                             name="question"
                             id="question"
                             value={model.question}
-                            onChange={(ev) => {
-                                setModel({ ...model, question: ev.target.value })
-                            }}
+                            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setModel({ ...model, [ev.target.name]: ev.target.value })}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                     </div>
@@ -138,8 +136,8 @@ export default function QuestionEditor({
                     <textarea
                         name="questionDescription"
                         id="questionDescription"
-                        value={model.description || ""}
-                        onChange={(ev) => {
+                        value={model?.description ?? ''}
+                        onChange={(ev: React.ChangeEvent<HTMLTextAreaElement>) => {
                             setModel({ ...model, description: ev.target.value })
                         }}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -162,21 +160,21 @@ export default function QuestionEditor({
                             </h4>
 
                             <div>
-                                {model.data.options.length > 0 ? (
-                                    model.data.options.map((op: any, idx: number) => (
-                                        <div key={op.uuid} className="flex items-center mb-1">
+                                {(model.data.options != undefined) && model.data.options?.length > 0 ? (
+                                    model.data.options.map((option: QuestionOptions, idx: number) => (
+                                        <div key={option.uuid} className="flex items-center mb-1">
                                             <span className="w-6 text-sm">{idx + 1}.</span>
                                             <input
                                                 type="text"
-                                                value={op.text}
+                                                value={option.text}
                                                 onInput={(ev: React.ChangeEvent<HTMLInputElement>) => {
-                                                    op.text = ev.target.value;
+                                                    option.text = ev.target.value;
                                                     setModel({ ...model });
                                                 }}
                                                 className="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500"
                                             />
                                             <button
-                                                onClick={() => deleteOption(op)}
+                                                onClick={() => deleteOption(option)}
                                                 type="button"
                                                 className="h-6 w-6 rounded-full flex items-center justify-center border border-transparent transition-colors hover:border-red-100"
                                             >
@@ -194,7 +192,7 @@ export default function QuestionEditor({
                         </div>
                     )}
                 </div>
-                {model.type === "select" && <div></div>}
+                {/* {model.type === "select" && <div></div>} */}
             </div>
             <hr />
         </>
@@ -206,6 +204,6 @@ function upperCaseFirst(str: string) {
 }
 
 function shouldHaveOptions(type: string, modelType: string) {
-    type = type || modelType;
+    type ||= modelType;
     return ["select", "radio", "checkbox"].includes(type);
 }

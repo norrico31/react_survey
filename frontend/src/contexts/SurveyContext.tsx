@@ -6,14 +6,15 @@ interface ISurveyContext {
     setSurveys: React.Dispatch<React.SetStateAction<any>>
     questionTypes: typeof initialQuestionTypesState
 }
-export interface IQuestion {
+export interface IQuestion extends Partial<{ survey_id: string; }> {
     id: string
-    survey_id?: string
     type: string
     question: string
     description?: string
-    data?: any
+    data: { options?: QuestionOptions[] }
 }
+
+export interface QuestionOptions { uuid: string; text: string }
 
 export interface ISurvey {
     id: number
