@@ -48,8 +48,8 @@ export default function QuestionEditor({
         setModel({ ...model })
     }
 
-    function deleteOption(op: any) {
-        model.data.options = model.data.options?.filter((option: any) => option.uuid != op.uuid)
+    function deleteOption(opId: string) {
+        model.data.options = model.data.options?.filter((option: any) => option.uuid != opId)
         setModel({ ...model })
     }
 
@@ -160,7 +160,7 @@ export default function QuestionEditor({
                             </h4>
 
                             <div>
-                                {(model.data.options != undefined) && model.data.options?.length > 0 ? (
+                                {(model.data.options != undefined) && model.data.options.length > 0 ? (
                                     model.data.options.map((option: QuestionOptions, idx: number) => (
                                         <div key={option.uuid} className="flex items-center mb-1">
                                             <span className="w-6 text-sm">{idx + 1}.</span>
@@ -174,7 +174,7 @@ export default function QuestionEditor({
                                                 className="w-full rounded-sm py-1 px-2 text-xs border border-gray-300 focus:border-indigo-500"
                                             />
                                             <button
-                                                onClick={() => deleteOption(option)}
+                                                onClick={() => deleteOption(option.uuid)}
                                                 type="button"
                                                 className="h-6 w-6 rounded-full flex items-center justify-center border border-transparent transition-colors hover:border-red-100"
                                             >
