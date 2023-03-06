@@ -48,7 +48,7 @@ export const routes = createBrowserRouter([
         ]
     },
     {
-        path: '/survey/:slug',
+        path: '/survey/public/:slug',
         element: <SurveyPublic />
     }
 ])

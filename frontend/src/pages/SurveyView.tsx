@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from "uuid"
-import { PhotoIcon } from '@heroicons/react/24/outline'
+import { LinkIcon, PhotoIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { IQuestion, ISurvey, useToastContext } from '../contexts'
 import { Button, PageContent } from '../components'
 import axiosClient from '../axios'
@@ -67,6 +67,11 @@ export default function SurveyView() {
         setSurvey({ ...survey })
     }
 
+    function deleteSurvey() {
+        return () => null
+    }
+
+
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         if (initSurveyState === survey) return
@@ -94,7 +99,20 @@ export default function SurveyView() {
     }
 
     return (
-        <PageContent title={id == undefined ? 'Create Survey' : 'Update Survey'}>
+        <PageContent title={id == undefined ? 'Create Survey' : 'Update Survey'}
+            button={
+                <div className="flex gap-2">
+                    <Button color="green" href={`/survey/public/${survey.slug}`}>
+                        <LinkIcon className="h-4 w-4 mr-2" />
+                        Public Link
+                    </Button>
+                    <Button color="red" onClick={deleteSurvey}>
+                        <TrashIcon className="h-4 w-4 mr-2" />
+                        Delete
+                    </Button>
+                </div>
+            }
+        >
             {loading ? (
                 <div>Loading...</div>
             ) : (
