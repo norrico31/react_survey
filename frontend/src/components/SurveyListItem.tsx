@@ -1,6 +1,6 @@
 import { ArrowTopRightOnSquareIcon, TrashIcon, PencilIcon } from '@heroicons/react/20/solid'
 import { ISurvey } from '../contexts/SurveyContext';
-import Button from './Button';
+import { Button } from './';
 
 export default function SurveyListItem({ survey, onClick }: { survey: ISurvey; onClick?: (id: number) => void }) {
     function handleClick() {
@@ -8,7 +8,7 @@ export default function SurveyListItem({ survey, onClick }: { survey: ISurvey; o
     }
     return (
         <div className="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]">
-            <img src={survey.image_url} alt={survey.title} className="w-full h-48 object-cover" />
+            <img src={survey.image_url + ''} alt={survey.title} className="w-full h-48 object-cover" />
             <h4 className="mt-4 text-lg font-bold">{survey.title}</h4>
             <div dangerouslySetInnerHTML={{ __html: survey?.description! }} className="overflow-hidden flex-1" />
             <div className="flex justify-between items-center mt-3">

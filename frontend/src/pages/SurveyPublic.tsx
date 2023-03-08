@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axiosClient from '../axios'
+import { PublicQuestionView } from '../components/';
 import { ISurvey } from './../contexts/SurveyContext';
 
 export default function SurveyPublic() {
@@ -33,7 +34,7 @@ export default function SurveyPublic() {
                 <form onSubmit={onSubmit} className="container mx-auto p-4">
                     <div className="grid grid-cols-6">
                         <div className="mr-4">
-                            <img src={survey?.image_url ?? ''} alt="" />
+                            <img src={survey?.image_url + ''} alt="" />
                         </div>
 
                         <div className="col-span-5">
@@ -55,7 +56,7 @@ export default function SurveyPublic() {
                                     <PublicQuestionView
                                         key={question.id}
                                         question={question}
-                                        index={index}
+                                        idx={index}
                                         answerChanged={(val) => answerChanged(question, val)}
                                     />
                                 ))}
