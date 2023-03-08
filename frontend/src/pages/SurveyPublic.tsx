@@ -8,7 +8,7 @@ export default function SurveyPublic() {
     const { slug } = useParams()
     const [survey, setSurvey] = useState<ISurvey | undefined>(undefined)
     const [loading, setLoading] = useState(false)
-    const [] = useState(false)
+    const [surveyFinished, setSurveyFinished] = useState(false)
 
     useEffect(() => {
         let cleanUp = false;
@@ -24,9 +24,9 @@ export default function SurveyPublic() {
         }
     }, [])
 
-    const answers: { [k: string]: string } = {}
-    function answerChanged(question: IQuestion, val: string) {
-        console.log(question.id, val)
+    const answers: { [k: string]: string | string[] } = {}
+    function answerChanged(question: IQuestion, val: string[] | string) {
+        console.log('id: ', question.id, val)
         answers[question.id] = val
     }
 
@@ -63,7 +63,7 @@ export default function SurveyPublic() {
                                         key={question.id}
                                         question={question}
                                         idx={index}
-                                        answerChanged={(val) => answerChanged(question, val)}
+                                        answerChanged={(val: string | string[]) => answerChanged(question, val)}
                                     />
                                 ))}
                             </div>

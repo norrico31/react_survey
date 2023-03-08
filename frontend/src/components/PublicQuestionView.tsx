@@ -1,12 +1,22 @@
-import { IQuestion } from '../contexts'
+import { IQuestion, QuestionOptions } from '../contexts'
 
 type PublicQuestionViewProps = {
     question: IQuestion
     idx: number
-    answerChanged: (val: string) => void
+    answerChanged: (val: string | string[]) => void
 }
 
 export default function PublicQuestionView({ question, idx, answerChanged }: PublicQuestionViewProps) {
+    let selectedOptions: string[] = []
+
+    function onCheckboxChange(option: QuestionOptions, evt: React.ChangeEvent<HTMLInputElement>) {
+        if (evt.target.checked) {
+            selectedOptions.push(option.text)
+        } else {
+            selectedOptions = selectedOptions.filter(op => op != option.text)
+        }
+        answerChanged(selectedOptions)
+    }
     return (
         <>
             <fieldset className="mb-4">
@@ -25,7 +35,7 @@ export default function PublicQuestionView({ question, idx, answerChanged }: Pub
                                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             >
                                 <option value="">Please Select</option>
-                                {question.data.options.map((option) => (
+                                {question?.data?.options?.map((option) => (
                                     <option key={option.uuid} value={option.text}>
                                         {option.text}
                                     </option>
@@ -35,7 +45,7 @@ export default function PublicQuestionView({ question, idx, answerChanged }: Pub
                     )}
                     {question.type === "radio" && (
                         <div>
-                            {question.data.options.map((option, ind) => (
+                            {question?.data?.options?.map((option, ind) => (
                                 <div key={option.uuid} className="flex items-center">
                                     <input
                                         id={option.uuid}
@@ -57,7 +67,7 @@ export default function PublicQuestionView({ question, idx, answerChanged }: Pub
                     )}
                     {question.type === "checkbox" && (
                         <div>
-                            {question.data.options.map((option, ind) => (
+                            {question?.data?.options?.map((option) => (
                                 <div key={option.uuid} className="flex items-center">
                                     <input
                                         id={option.uuid}
