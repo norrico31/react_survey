@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axiosClient from '../axios'
 import { PublicQuestionView } from '../components/';
-import { ISurvey } from './../contexts/SurveyContext';
+import { ISurvey, IQuestion } from './../contexts/SurveyContext';
 
 export default function SurveyPublic() {
     const { slug } = useParams()
     const [survey, setSurvey] = useState<ISurvey | undefined>(undefined)
     const [loading, setLoading] = useState(false)
+    const [] = useState(false)
 
     useEffect(() => {
         let cleanUp = false;
@@ -22,6 +23,12 @@ export default function SurveyPublic() {
             cleanUp = true
         }
     }, [])
+
+    const answers: { [k: string]: string } = {}
+    function answerChanged(question: IQuestion, val: string) {
+        console.log(question.id, val)
+        answers[question.id] = val
+    }
 
     function onSubmit(e: React.FormEvent) {
 
