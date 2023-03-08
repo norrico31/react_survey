@@ -16,9 +16,8 @@ export default function SurveyPublic() {
             .then((res) => {
                 if (!cleanUp) {
                     setSurvey(res.data.data)
-                    setLoading(false)
                 }
-            })
+            }).finally(() => setLoading(false))
         return function () {
             cleanUp = true
         }

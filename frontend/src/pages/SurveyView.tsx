@@ -34,10 +34,8 @@ export default function SurveyView() {
         setLoading(true)
         if (id != undefined) {
             axiosClient.get('/surveys/' + id)
-                .then(({ data }) => {
-                    setSurvey(data.data)
-                    setLoading(false)
-                })
+                .then(({ data }) => setSurvey(data.data))
+                .finally(() => setLoading(false))
         } else setLoading(false)
     }, [])
 

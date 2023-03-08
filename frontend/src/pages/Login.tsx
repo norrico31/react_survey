@@ -18,7 +18,7 @@ export default function Login() {
             password,
         }).then(({ data }) => {
             localStorage.setItem('token', JSON.stringify(data.token))
-            setUser({ user: data.user, token: data.token })
+            setUser({ user: undefined, token: data.token })
         }).catch(({ response }) => {
             setError({ __html: response?.data?.error })
         })

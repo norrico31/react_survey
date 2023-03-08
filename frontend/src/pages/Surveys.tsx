@@ -35,8 +35,8 @@ export default function Surveys() {
             .then(({ data }) => {
                 setSurveys(data.data)
                 setMeta(data.meta)
-                setLoading(false)
             })
+            .finally(() => setLoading(false))
     }
 
     function deleteSurvey(id: number) {
