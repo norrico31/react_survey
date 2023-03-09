@@ -26,12 +26,12 @@ export default function SurveyPublic() {
 
     const answers: { [k: string]: string | string[] } = {}
     function answerChanged(question: IQuestion, val: string[] | string) {
-        console.log('id: ', question.id, val)
         answers[question.id] = val
     }
 
     function onSubmit(e: React.FormEvent) {
-
+        e.preventDefault()
+        console.log(answers)
     }
 
     return (

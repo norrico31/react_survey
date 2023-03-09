@@ -8,6 +8,7 @@ php artisan make:model Survey -mcrR
 php artisan make:controller SurveyController --api
 php artisan make:request SurveyStoreRequest
 php artisan make:request SurveyUpdateRequest
+php artisan make:request StoreSurveyAnswerRequest
 php artisan make:resource SurveyResource
 php artisan make:resource SurveyQuestionResource
 
