@@ -32,9 +32,9 @@ export default function SurveyPublic() {
     function onSubmit(e: React.FormEvent) {
         e.preventDefault()
         console.log(answers)
-        axiosClient.post(`/survey/${survey?.id}/answer`, { survey_id: survey?.id, answers, })
+        axiosClient.post(`/survey/${survey?.id}/answer`, { answers, })
             .then((res) => {
-                console.log(res.data)
+                setSurveyFinished(true)
             })
     }
 
