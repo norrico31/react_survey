@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\QuestionTypeEnum;
 use App\Models\Survey;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\Models\SurveyAnswer;
 use Illuminate\Http\Request;
 use App\Models\SurveyQuestion;
+use App\Enums\QuestionTypeEnum;
+use App\Models\SurveyQuestionAnswer;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rules\Enum;
 use App\Http\Resources\SurveyResource;
 use App\Http\Requests\SurveyStoreRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\SurveyUpdateRequest;
+use App\Http\Requests\StoreSurveyAnswerRequest;
 
 class SurveyController extends Controller
 {
@@ -259,5 +262,33 @@ class SurveyController extends Controller
         }
 
         return new SurveyResource($survey);
+    }
+
+    public function storeAnswer(StoreSurveyAnswerRequest $request, Survey $survey)
+    {
+        $validated = $request->validated();
+
+        $surveyAnswer = SurveyAnswer::create([
+            'survey_id' => $survey->id,
+            'start_date' => date('Y-m-d H:i:s'),
+            'end_date' => date('Y-m-d H:i:s'),
+        ]);
+
+        foreach ($validated['answers'] as $questionId => $answer) {
+            $question = SurveyQuestion::where(['id' => $questionId, 'survey_id' => $survey->id])->get();
+            if (!$question) {
+                return response("Invalid question ID: \"$questionId\"", 400);
+            }
+
+            $data = [
+                'survey_question_id' => $questionId,
+                'survey_answer_id' => $surveyAnswer->id,
+                'answer' => is_array($answer) ? json_encode($answer) : $answer
+            ];
+
+            $questionAnswer = SurveyQuestionAnswer::create($data);
+        }
+
+        return response("", 201);
     }
 }
