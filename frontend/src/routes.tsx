@@ -13,7 +13,7 @@ export const routes = createBrowserRouter([
             },
             {
                 path: '/',
-                element: <_Dashboard />
+                element: <Dashboard />
             },
             {
                 path: 'surveys',
