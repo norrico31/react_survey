@@ -11,13 +11,11 @@ export default function PublicQuestionView({ question, idx, answerChanged }: Pub
     let selectedOptions: string[] = []
 
     function onCheckboxChange(option: QuestionOptions, evt: React.ChangeEvent<HTMLInputElement>) {
-        if (evt.target.checked) {
-            selectedOptions.push(option.text)
-        } else {
-            selectedOptions = selectedOptions.filter(op => op != option.text)
-        }
+        if (evt.target.checked) selectedOptions.push(option.text)
+        else selectedOptions = selectedOptions.filter(op => op != option.text)
         answerChanged(selectedOptions)
     }
+
     function renderInput(type: string) {
         const inputComponents: Record<string, ReactNode> = {
             'select': <InputSelect options={question?.data?.options ?? []} onChange={answerChanged} />,
@@ -28,6 +26,7 @@ export default function PublicQuestionView({ question, idx, answerChanged }: Pub
         }
         return inputComponents[type] as ReactNode
     }
+
     return (
         <>
             <fieldset className="mb-4">

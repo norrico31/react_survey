@@ -23,8 +23,8 @@ export default function Signup() {
         }).then(({ data }) => {
             localStorage.setItem('token', JSON.stringify(data.token))
             setUser({ user: data.user, token: data.token })
-        }).catch(({ response }) => {
-            const errors = Object.values(response?.data?.errors)?.reduce((acc: any, err: any) => [...acc, ...err], []) as string[]
+        }).catch((err) => {
+            const errors = Object.values(err?.response?.data?.errors)?.reduce((acc: string[], err: any) => [...acc, ...err], [])
             setError({ __html: errors.join('<br>') })
         })
     }
