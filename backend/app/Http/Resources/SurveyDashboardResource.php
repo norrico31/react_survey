@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\URL;
 
 class SurveyDashboardResource extends JsonResource
 {
@@ -14,6 +15,16 @@ class SurveyDashboardResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'image_url' => $this->image ? URL::to($this->image) : null,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'status' => !!$this->status,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'expire_date' => $this->expire_date,
+            'questions' => $this->questions()->count(),
+            'answers' => $this->answers()->count()
+        ];
     }
 }
