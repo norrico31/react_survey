@@ -22,13 +22,13 @@ class DashboardController extends Controller
         $latest = Survey::query()->where('user_id', $user->id)->latest('created_at')->first();
 
         // total number of answers
-        $totalAnswers = SurveyAnswer::query()
+        $total_answers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->count();
 
         // latest 5 answer
-        $latestAnswers = SurveyAnswer::query()
+        $latest_answers = SurveyAnswer::query()
             ->join('surveys', 'survey_answers.survey_id', '=', 'surveys.id')
             ->where('surveys.user_id', $user->id)
             ->orderBy('end_date', 'DESC')
@@ -36,10 +36,10 @@ class DashboardController extends Controller
             ->getModels('survey_answers.*');
 
         return [
-            'totalSurveys' => $total,
-            'latestSurvey' => $latest ? new SurveyDashboardResource($latest) : null,
-            'totalAnswers' => $totalAnswers,
-            'latestAnswers' => SurveyAnswerResource::collection($latestAnswers)
+            'total_surveys' => $total,
+            'latest_survey' => $latest ? new SurveyDashboardResource($latest) : null,
+            'total_answers' => $total_answers,
+            'latest_answers' => SurveyAnswerResource::collection($latest_answers)
         ];
     }
 }
