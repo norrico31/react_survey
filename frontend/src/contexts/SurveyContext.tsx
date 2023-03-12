@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-const initialQuestionTypesState = ['text', "select", "radio", "checkbox", "textarea"]
 interface ISurveyContext {
     surveys: ISurvey[];
     setSurveys: React.Dispatch<React.SetStateAction<any>>
@@ -30,6 +29,25 @@ export interface ISurvey {
     questions: IQuestion[]
 }
 
+export interface IAnswer extends Partial<{ survey: ISurvey }> {
+    end_date: string
+    id: number
+}
+
+export interface ILatestSurvey {
+    answers: number
+    created_at: string
+    expire_date: string
+    id: number
+    image_url?: string
+    questions: number
+    slug: string
+    status: boolean
+    title: string
+}
+
+const initialQuestionTypesState = ['text', "select", "radio", "checkbox", "textarea"]
+
 const SurveyContext = createContext<ISurveyContext>({
     surveys: [],
     questionTypes: initialQuestionTypesState,
@@ -39,10 +57,11 @@ const SurveyContext = createContext<ISurveyContext>({
 export const useSurveyContext = () => useContext(SurveyContext)
 
 export default function SurveyProvider({ children }: { children: ReactNode }) {
-    const [surveys, setSurveys] = useState<ISurvey[]>([...tmpSurveys])
+    const [surveys, setSurveys] = useState<ISurvey[]>(() => tmpSurveys)
     const [questionTypes] = useState<typeof initialQuestionTypesState>(initialQuestionTypesState)
     return <SurveyContext.Provider value={{ surveys, setSurveys, questionTypes } as const}>{children}</SurveyContext.Provider>
 }
+
 
 const tmpSurveys = [
     {
