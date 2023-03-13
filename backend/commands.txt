@@ -24,3 +24,8 @@ php artisan migrate:rollback
 php artisan migrate
 
 php artisan migrate:fresh
+
+
+
+to debug a problem
+storage -> logs -> laravel.log

@@ -3,11 +3,11 @@ import { ReactNode } from "react";
 type CardProps = {
     title: string
     children?: ReactNode
-    style: any
+    style: Record<string, string | number>
     className: string
 }
 
-export default function Card({ title, children, style = '', className = '' }: CardProps) {
+export default function Card({ title, children, style, className = '' }: CardProps) {
     className += ' bg-white shadow-md p-3 text-center flex flex-col animate-fade-in-down'
     return (
         <div className={className} style={style}>

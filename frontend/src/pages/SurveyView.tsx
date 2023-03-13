@@ -66,7 +66,13 @@ export default function SurveyView() {
     }
 
     function deleteSurvey() {
-        return () => null
+        if (window.confirm(`Are you sure you want to delete this survey?`)) {
+            axiosClient.delete('/surveys/' + id)
+                .then(() => {
+                    showToast('Delete survey successfully!')
+                    navigate('/surveys')
+                })
+        }
     }
 
 
